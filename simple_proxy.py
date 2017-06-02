@@ -30,6 +30,7 @@ def proxy_server(webserver, port, conn, data, address):
 
 		s.close()
 		conn.close()
+
 	except socket.error, (value, message):
 		s.close()
 		conn.close()
@@ -43,7 +44,7 @@ def conn_string(conn, data, address):
 		pos_http = url.find('://')
 		
 		if (pos_http == -1):
-			temp - url
+			temp = url
 		else:
 			temp = url[(pos_http + 3):]
 
@@ -59,10 +60,9 @@ def conn_string(conn, data, address):
 			port = 80
 			webserver = temp[:pos_webserver]
 		else:
-			port = int((temp[(port_pose + 1):])[:pos_webserver - pos_port - 1])
+			port = int((temp[(pos_port + 1):])[:pos_webserver - pos_port - 1])
 			webserver = temp[:pos_port]
-
-		proxy_server(webserver, port, conn, address, data)
+		proxy_server(webserver, port, conn, data, address)
 	except Exception, e:
 		print e
 		pass
@@ -86,6 +86,7 @@ def start():
 		try:
 			conn, address = s.accept()
 			data = conn.recv(buffer_size)
+
 			start_new_thread(conn_string, (conn, data, address))
 		except KeyboardInterrupt:
 			s.close()
