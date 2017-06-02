@@ -45,7 +45,7 @@ def conn_string(conn, data, address):
 		if (pos_http == -1):
 			temp - url
 		else:
-			temp = url[(http_pos + 3):]
+			temp = url[(pos_http + 3):]
 
 		pos_port = temp.find(':')
 		pos_webserver = temp.find("/")
@@ -63,7 +63,8 @@ def conn_string(conn, data, address):
 			webserver = temp[:pos_port]
 
 		proxy_server(webserver, port, conn, address, data)
-	except Exception e:
+	except Exception, e:
+		print e
 		pass
 
 
@@ -71,11 +72,12 @@ def conn_string(conn, data, address):
 def start():
 	try:
 		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # socket to be used
-		s.bind('', listen_port)
+		s.bind(('', listen_port))
 		s.listen(max_conn) # connections limited by the maximum number of connections supported
 		print('Listening Successfully at %d' % (listen_port))
-	except Exception e:
+	except Exception, e:
 		print 'Failed to Initialize Socket'
+		print e
 		sys.exit()
 
 
